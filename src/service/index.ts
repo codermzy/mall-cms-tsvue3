@@ -1,0 +1,29 @@
+// service统一出口
+import ZYRequest from './request'
+import { BASE_URL, TIME_OUT } from './request/config'
+
+const zyRequest = new ZYRequest({
+  baseURL: BASE_URL,
+  timeout: TIME_OUT,
+  interceptors: {
+    requestInterceptors(config) {
+      // 携带 token的拦截
+      const token = ''
+      if (token) {
+        // config.headers.Authorization = `Bearer ${token}`
+      }
+      return config
+    },
+    requestInterceptorCatch(err) {
+      return err
+    },
+    responseInterceptors(config) {
+      return config
+    },
+    responseInterceptorsCatch(err) {
+      return err
+    }
+  }
+})
+
+export default zyRequest
