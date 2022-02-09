@@ -1,15 +1,15 @@
 <template>
   <div class="login-panel">
     <h1 class="title" ref="title">后台管理系统</h1>
-    <el-tabs type="border-card" class="demo-tabs" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" class="demo-tabs" stretch v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span> <i class="el-icon-user-solid"></i> 账号登录 </span>
         </template>
         <login-account ref="accountRef" />
       </el-tab-pane>
 
-      <el-tab-pane>
+      <el-tab-pane name="phone" ref="phoneRef">
         <template #label>
           <span> <i class="el-icon-mobile-phone"></i> 手机登录 </span>
         </template>
@@ -42,16 +42,27 @@ export default defineComponent({
     const isKeepPassword = ref(true)
     // 获取子组件 login-account
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    // 获取子组件 login-phone
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
+    // 当前选择的tab栏
+    const currentTab = ref('account')
 
     // 登录按钮触发
     const handleLoginClick = () => {
-      // 调用子组件的loginAction方法
-      accountRef.value?.loginAction()
+      // 判断当前是否为账号登录
+      if (currentTab.value === 'account') {
+        // 调用子组件的loginAction方法
+        accountRef.value?.loginAction(isKeepPassword.value)
+      } else {
+        phoneRef.value?.loginAction()
+      }
     }
     return {
       isKeepPassword,
       handleLoginClick,
-      accountRef
+      accountRef,
+      currentTab,
+      phoneRef
     }
   }
 })

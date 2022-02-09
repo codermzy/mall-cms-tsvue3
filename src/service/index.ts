@@ -2,15 +2,16 @@
 import ZYRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
+import localCache from '@/utils/cache'
 const zyRequest = new ZYRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptors(config) {
       // 携带 token的拦截
-      const token = ''
+      const token = localCache.getCache('token')
       if (token) {
-        // config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token}`
       }
       return config
     },

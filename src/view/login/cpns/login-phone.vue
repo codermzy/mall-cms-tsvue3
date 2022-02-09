@@ -26,9 +26,12 @@ export default defineComponent({
       num: '',
       code: ''
     })
-
+    const loginAction = () => {
+      console.log('phone的loginAction方法被触发')
+    }
     return {
-      phone
+      phone,
+      loginAction
     }
   }
 })
