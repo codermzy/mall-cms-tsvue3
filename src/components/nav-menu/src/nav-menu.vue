@@ -5,7 +5,7 @@
       <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
-      default-active="1"
+      default-active="2"
       class="el-menu-vertical"
       background-color="#0c2135"
       text-color="#b7bdc3"
