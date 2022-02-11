@@ -20,6 +20,7 @@ module.exports = {
         components: '@/components' //在vue-cli中已经默认配置 @ 为 src路径
       }
     },
+    devtool: 'source-map',
     devServer: {
       proxy: {
         '^/api': {
