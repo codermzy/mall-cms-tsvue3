@@ -6,19 +6,24 @@
       @click="handleFoldClick"
     ></i>
     <div class="content">
-      <div>面包屑</div>
+      <zy-breadcrumb :breadcrumbs="breadcrumbs" />
       <user-info></user-info>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import userInfo from './user-info.vue'
+import ZyBreadcrumb from '@/base-ui/breadcrumb'
 
+import { useStore } from '@/store'
+import { useRoute } from 'vue-router'
+import { pathMapBreadcrumb } from '@/utils/map-menus'
 export default defineComponent({
   components: {
-    userInfo
+    userInfo,
+    ZyBreadcrumb
   },
 
   emits: ['foldChange'],
@@ -29,9 +34,19 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
+
+    // 面包屑的数据: [{name: , path: }]
+    const breadcrumbs = computed(() => {
+      const store = useStore()
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumb(store.state.login.userMenus, currentPath)
+    })
+    console.log(breadcrumbs)
     return {
       isFold,
-      handleFoldClick
+      handleFoldClick,
+      breadcrumbs
     }
   }
 })
