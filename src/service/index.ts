@@ -1,9 +1,9 @@
 // service统一出口
-import ZYRequest from './request'
+import ZyRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
 import localCache from '@/utils/cache'
-const zyRequest = new ZYRequest({
+const zyRequest = new ZyRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {

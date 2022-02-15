@@ -6,7 +6,7 @@ import { ElLoading } from 'element-plus'
 import { ILoadingInstance } from 'element-plus/lib/el-loading/src/loading.type'
 
 const DEFAULT_LOADING = true
-class ZYRequest {
+class ZyRequest {
   instance: AxiosInstance
   interceptors?: ZYRequestInterceptors
   showLoading: boolean
@@ -73,7 +73,7 @@ class ZYRequest {
     )
   }
 
-  request<T>(config: ZYRequestConfig<T>): Promise<T> {
+  request<T = any>(config: ZYRequestConfig<T>): Promise<T> {
     return new Promise((resolve) => {
       // 1. 单个请求对请求config的处理
       if (config.interceptors?.requestInterceptors) {
@@ -106,18 +106,18 @@ class ZYRequest {
         })
     })
   }
-  get<T>(config: ZYRequestConfig<T>): Promise<T> {
+  get<T = any>(config: ZYRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'GET' })
   }
-  post<T>(config: ZYRequestConfig<T>): Promise<T> {
+  post<T = any>(config: ZYRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
-  delete<T>(config: ZYRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: ZYRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: ZYRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: ZYRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'PATCH' })
   }
 }
 
-export default ZYRequest
+export default ZyRequest

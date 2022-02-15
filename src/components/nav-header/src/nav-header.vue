@@ -34,7 +34,6 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
-
     // 面包屑的数据: [{name: , path: }]
     const breadcrumbs = computed(() => {
       const store = useStore()
@@ -42,7 +41,6 @@ export default defineComponent({
       const currentPath = route.path
       return pathMapBreadcrumb(store.state.login.userMenus, currentPath)
     })
-    console.log(breadcrumbs)
     return {
       isFold,
       handleFoldClick,
