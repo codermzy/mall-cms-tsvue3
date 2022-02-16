@@ -7,7 +7,9 @@
         </template>
         <template #footer>
           <div class="footer">
-            <el-button icon="el-icon-refresh">重置</el-button>
+            <el-button icon="el-icon-refresh" @click="handleResetClick">
+              重置
+            </el-button>
             <el-button type="primary" icon="el-icon-search">搜索</el-button>
           </div>
         </template>
@@ -30,16 +32,23 @@ export default defineComponent({
   components: {
     ZyForm
   },
-  setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
+  setup(props) {
+    // 双向绑定的属性应该是由配置文件的field来决定的
+    const formItem = props.searchFormConfig?.formItem ?? []
+    const formOriginData = {}
+
+    for (const item of formItem) {
+      formOriginData[item.field] = ''
+    }
+    const formData = ref(formOriginData)
+
+    // 重置按钮
+    const handleResetClick = () => {
+      formData.value = formOriginData
+    }
     return {
-      formData
+      formData,
+      handleResetClick
     }
   }
 })
