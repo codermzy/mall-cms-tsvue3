@@ -10,7 +10,12 @@
             <el-button icon="el-icon-refresh" @click="handleResetClick">
               重置
             </el-button>
-            <el-button type="primary" icon="el-icon-search">搜索</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              @click="handleQueryClick"
+              >搜索</el-button
+            >
           </div>
         </template>
       </zy-form>
@@ -32,7 +37,8 @@ export default defineComponent({
   components: {
     ZyForm
   },
-  setup(props) {
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
     // 双向绑定的属性应该是由配置文件的field来决定的
     const formItem = props.searchFormConfig?.formItem ?? []
     const formOriginData = {}
@@ -44,11 +50,21 @@ export default defineComponent({
 
     // 重置按钮
     const handleResetClick = () => {
-      formData.value = formOriginData
+      // formData.value = formOriginData
+      for (const key in formOriginData) {
+        formData.value[`${key}`] = formOriginData[key]
+      }
+      emit('resetBtnClick')
+    }
+
+    // 查询按钮
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
     }
     return {
       formData,
-      handleResetClick
+      handleResetClick,
+      handleQueryClick
     }
   }
 })

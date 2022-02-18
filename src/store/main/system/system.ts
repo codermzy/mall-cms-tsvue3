@@ -11,7 +11,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       usersList: [],
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   mutations: {
@@ -26,18 +30,41 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, roleCount: number) {
       state.roleCount = roleCount
+    },
+    changeGoodsList(state, goodsList: any[]) {
+      state.goodsList = goodsList
+    },
+    changeGoodsCount(state, goodsCount: number) {
+      state.goodsCount = goodsCount
+    },
+    changeMenuList(state, menuList: any[]) {
+      state.menuList = menuList
+    },
+    changeMenuCount(state, menuCount: number) {
+      state.menuCount = menuCount
     }
   },
   getters: {
     pageListData(state) {
       return (pageName: string) => {
-        // return state[`${pageName}List`]
-        switch (pageName) {
-          case 'users':
-            return state.usersList
-          case 'role':
-            return state.roleList
-        }
+        return state[`${pageName}List`]
+        // switch (pageName) {
+        //   case 'users':
+        //     return state.usersList
+        //   case 'role':
+        //     return state.roleList
+        // }
+      }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return state[`${pageName}Count`]
+        // switch (pageName) {
+        //   case 'users':
+        //     return state.usersCount
+        //   case 'role':
+        //     return state.roleCount
+        // }
       }
     }
   },
@@ -60,7 +87,11 @@ const systemModule: Module<ISystemState, IRootState> = {
 
       // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data
-      switch (pageName) {
+      const changePageName =
+        pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
+      commit(`change${changePageName}List`, list)
+      commit(`change${changePageName}Count`, totalCount)
+      /*       switch (pageName) {
         case 'users':
           commit('changeUsersList', list)
           commit('changeUsersCount', totalCount)
@@ -69,7 +100,11 @@ const systemModule: Module<ISystemState, IRootState> = {
           commit('changeRoleList', list)
           commit('changeRoleCount', totalCount)
           break
-      }
+        case 'goods':
+          commit('changeGoodsList', list)
+          commit('changeGoodsCount', totalCount)
+          break
+      } */
     }
   }
 }
