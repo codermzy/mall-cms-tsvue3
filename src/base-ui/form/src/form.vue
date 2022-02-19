@@ -5,9 +5,10 @@
     </div>
     <el-form :label-width="labelWidth">
       <el-row>
-        <template v-for="item in formItem" :key="item.label">
+        <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
+              v-if="!item.isHidden"
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
@@ -60,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue'
-import { IFormItem } from '../types'
+import { IFormItems } from '../types'
 
 export default defineComponent({
   props: {
@@ -68,8 +69,8 @@ export default defineComponent({
       type: Object,
       required: true
     },
-    formItem: {
-      type: Array as PropType<IFormItem[]>,
+    formItems: {
+      type: Array as PropType<IFormItems[]>,
       default: () => []
     },
     labelWidth: {

@@ -40,10 +40,10 @@ export default defineComponent({
   emits: ['resetBtnClick', 'queryBtnClick'],
   setup(props, { emit }) {
     // 双向绑定的属性应该是由配置文件的field来决定的
-    const formItem = props.searchFormConfig?.formItem ?? []
+    const formItems = props.searchFormConfig?.formItems ?? []
     const formOriginData = {}
 
-    for (const item of formItem) {
+    for (const item of formItems) {
       formOriginData[item.field] = ''
     }
     const formData = ref(formOriginData)

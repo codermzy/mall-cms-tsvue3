@@ -2,7 +2,7 @@ import { IForm } from '@/base-ui/form'
 
 export const searchFormConfig: IForm = {
   labelWidth: '120px',
-  formItem: [
+  formItems: [
     {
       field: 'name',
       type: 'input',

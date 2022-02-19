@@ -2,7 +2,12 @@ import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
 import { ISystemState } from './types'
 
-import { getPageListData } from '@/service/main/system/system'
+import {
+  getPageListData,
+  deletPageData,
+  createPageData,
+  editPageData
+} from '@/service/main/system/system'
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -81,7 +86,6 @@ const systemModule: Module<ISystemState, IRootState> = {
           pageUrl = '/role/list'
           break
       } */
-
       // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
 
@@ -105,6 +109,62 @@ const systemModule: Module<ISystemState, IRootState> = {
           commit('changeGoodsCount', totalCount)
           break
       } */
+    },
+
+    async deletaPageDataAction({ dispatch }, payload) {
+      // 1.获取pageName和 id
+      const { pageName, id } = payload
+      const pageUrl = `/${pageName}/${id}`
+
+      // 2.调用删除网络请求
+      const deleteResult = await deletPageData(pageUrl)
+
+      // 3. 重新请求最新数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+
+      return deleteResult
+    },
+
+    async createPageDataAction({ dispatch }, payload) {
+      // 1.创建数据的请求
+      const { pageName, newData } = payload
+      const pageUrl = `/${pageName}`
+      const createResult = await createPageData(pageUrl, newData)
+      // 2.更新页面数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+
+      return createResult
+    },
+
+    async editPageDataAction({ dispatch }, payload) {
+      // 1.创建数据的请求
+      const { pageName, editData, id } = payload
+      const pageUrl = `/${pageName}/${id}`
+
+      const editResult = await editPageData(pageUrl, editData)
+
+      // 2.更新页面数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+
+      return editResult
     }
   }
 }

@@ -8,7 +8,7 @@ export const searchFormConfig: IForm = {
     padding: '10px 40px'
   },
   labelWidth: '120px',
-  formItem: [
+  formItems: [
     {
       field: 'id',
       type: 'input',
