@@ -25,8 +25,8 @@
     <page-modal
       :defaultInfo="defaultInfo"
       ref="pageModalRef"
-      :modalConfig="modalConfigComputed"
       pageName="users"
+      :modalConfig="modalConfigComputed"
     ></page-modal>
   </div>
 </template>
@@ -91,7 +91,7 @@ export default defineComponent({
     })
 
     // 3.调用hook获取公共变量和函数
-    const [handleNewData, handleEditData, pageModalRef, defaultInfo] =
+    const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
       usePageModal(newCallback, editCallback)
     return {
       searchFormConfig,

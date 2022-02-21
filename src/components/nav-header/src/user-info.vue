@@ -11,12 +11,15 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item icon="el-icon-circle-close"
-              >退出登录</el-dropdown-item
+            <el-dropdown-item
+              icon="el-icon-circle-close"
+              @click="handleExitClick"
             >
-            <el-dropdown-item icon="el-icon-info" divided
-              >个人信息</el-dropdown-item
-            >
+              退出登录
+            </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-info" divided>
+              个人信息
+            </el-dropdown-item>
             <el-dropdown-item icon="el-icon-unlock">修改密码</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -28,14 +31,23 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
+import localCache from '@/utils/cache'
 
 export default defineComponent({
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     const name = computed(() => store.state.login.userInfo.name)
+
+    const handleExitClick = () => {
+      localCache.deleteCache('token')
+      router.push('/main')
+    }
     return {
-      name
+      name,
+      handleExitClick
     }
   }
 })

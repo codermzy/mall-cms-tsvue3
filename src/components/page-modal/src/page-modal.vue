@@ -1,9 +1,5 @@
 <template>
   <div class="page-modal">
-    <el-button type="text" @click="dialogVisible = true"
-      >点击打开 Dialog</el-button
-    >
-
     <el-dialog
       title="新建用户"
       v-model="dialogVisible"
@@ -12,6 +8,7 @@
       destroy-on-close
     >
       <zy-form v-bind="modalConfig" v-model="formData"></zy-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -37,6 +34,10 @@ export default defineComponent({
       required: true
     },
     defaultInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    otherInfo: {
       type: Object,
       default: () => ({})
     },
@@ -69,14 +70,14 @@ export default defineComponent({
         // 编辑
         store.dispatch('system/editPageDataAction', {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         //新建
         store.dispatch('system/createPageDataAction', {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
     }

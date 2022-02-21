@@ -35,7 +35,9 @@ import {
   ElConfigProvider,
   ElImage,
   ElPopover,
-  ElDialog
+  ElDialog,
+  ElTree,
+  ElCard
 } from 'element-plus'
 const components = [
   ElTabPane,
@@ -71,7 +73,9 @@ const components = [
   ElConfigProvider,
   ElImage,
   ElPopover,
-  ElDialog
+  ElDialog,
+  ElTree,
+  ElCard
 ]
 
 export default function (app: App): void {
