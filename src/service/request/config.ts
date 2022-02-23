@@ -19,6 +19,7 @@ const TIME_OUT = 10000
 if (process.env.NODE_ENV === 'development') {
   BASE_URL = '/api'
 } else if (process.env.NODE_ENV === 'production') {
+  console.log(process.env.NODE_ENV)
   BASE_URL = '/api'
 } else if (process.env.NODE_ENV === 'test') {
   BASE_URL = 'http://codermzy.org/test'
